@@ -1,29 +1,39 @@
 // import styles from './styles.css'
 import React from 'react'
+import { Audio } from 'react-loader-spinner'
 import { Searchbar } from './Searchbar/Searchbar'
-import ImageGallery from './ImageGallery/ImageGallery'
+import {ImageGallery} from './ImageGallery/ImageGallery'
 import * as API from '../services/api'
+
 // import { render } from '@testing-library/react'
 
 export class App extends React.Component {
   state = {
-  imagesSearch: []
+    imagesSearch: [],
+    isLoading: false
   }
   
-   addMaterial = async (values) => {
-    const material = await API.addMaterial(values)
-    this.setState(state => ({imagesSearch: [...state.imagesSearch, material]}))
-    // console.log(material)
-    // console.log(values)
-    // console.log(this.state.imagesSearch)
-
+   
+  addMaterial = async (values) => {
+    try {
+      this.setState({ isLoading: true })
+      const material = await API.addMaterial(values)
+      this.setState(state => ({
+        imagesSearch: material,
+        isLoading: false
+      }))
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
+   
+  
 
 
   render() {
-            console.log(this.state.imagesSearch)
-
-  return(
+    
+    return (
     <div
       style={{
         height: '100vh',
@@ -31,14 +41,23 @@ export class App extends React.Component {
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 40,
-        color: '#010101'
+          color: '#010101'
       }}
     >
       <Searchbar
       onSubmit={this.addMaterial}
       />
+      {this.state.isLoading && <Audio
+        height="80"
+        width="80"
+        radius="9"
+        color="green"
+        ariaLabel="loading"
+        wrapperStyle
+        wrapperClass
+      />}
       <ImageGallery
-      imagesSearch = {this.state.imagesSearch}
+        item={this.state.imagesSearch}
       />
     </div>
   );

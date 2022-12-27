@@ -2,10 +2,10 @@
 import { Formik, Form, Field } from "formik";
 
 
-export const Searchbar = ({ onSubmit }) => {
+export const Searchbar = ({ onSubmit,  }) => {
   
   const handleSubmit = (values, actions) => {
-    onSubmit(values)
+    onSubmit(values).then(() => actions.setSubmitting(false))
     actions.resetForm();
 
   }
@@ -13,8 +13,10 @@ export const Searchbar = ({ onSubmit }) => {
     initialValues={{ imagesSearch: '' }}
     onSubmit={handleSubmit}
   >
-    <Form>
-      <button type="submit" className="button">
+    {props => {
+      return (
+         <Form>
+      <button type="submit" className="button" disabled={props.isSubmitting}>
        <span className="button-label">Search</span>
      </button>
       <Field
@@ -30,5 +32,7 @@ export const Searchbar = ({ onSubmit }) => {
       >
       </Field>
   </Form>
+      )
+   }}
 </Formik>
 };
