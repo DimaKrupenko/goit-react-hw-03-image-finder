@@ -1,11 +1,10 @@
 import Styles from './ImageGallery.module.css'
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem'
 
 export const ImageGallery = ({items}) => {
     return (
             <ul className={Styles.ImageGallery}>
-                {items && items.map(item => (
-               <li key={item.id}><img src={item.webformatURL} alt=''></img></li>
-           ))}
+            <ImageGalleryItem items={items}/>
             </ul>
     )
     
