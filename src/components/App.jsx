@@ -57,7 +57,7 @@ export class App extends React.Component {
         wrapperClass
       />}
       <ImageGallery
-        item={this.state.imagesSearch}
+        items={this.state.imagesSearch}
       />
     </div>
   );
