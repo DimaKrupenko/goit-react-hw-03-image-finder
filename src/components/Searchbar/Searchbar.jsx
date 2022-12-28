@@ -1,5 +1,6 @@
 // import  React  from "react";
 import { Formik, Form, Field } from "formik";
+import Styles from './Searchbar.module.css'
 
 
 export const Searchbar = ({ onSubmit,  }) => {
@@ -9,19 +10,20 @@ export const Searchbar = ({ onSubmit,  }) => {
     actions.resetForm();
 
   }
-  return <Formik
+  return <div className={Styles.Searchbar}><Formik
+    
     initialValues={{ imagesSearch: '' }}
     onSubmit={handleSubmit}
   >
     {props => {
       return (
-         <Form>
-      <button type="submit" className="button" disabled={props.isSubmitting}>
-       <span className="button-label">Search</span>
+         <Form className={Styles.SearchForm}>
+          <button type="submit" className={Styles.SearchFormButton} disabled={props.isSubmitting}>
+       <span className={Styles.SearchFormButtonLabel}>Search</span>
      </button>
       <Field
         name='imagesSearch'
-        className="input"
+        className={Styles.SearchFormInput}
         type="text"
         autoComplete="off"
         autoFocus
@@ -34,5 +36,5 @@ export const Searchbar = ({ onSubmit,  }) => {
   </Form>
       )
    }}
-</Formik>
+</Formik></div>
 };

@@ -1,9 +1,10 @@
-// import styles from './styles.css'
+import styles from './styles.css'
 import React from 'react'
 import { Audio } from 'react-loader-spinner'
 import { Searchbar } from './Searchbar/Searchbar'
 import {ImageGallery} from './ImageGallery/ImageGallery'
 import * as API from '../services/api'
+
 
 // import { render } from '@testing-library/react'
 
@@ -34,15 +35,7 @@ export class App extends React.Component {
   render() {
     
     return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-          color: '#010101'
-      }}
+    <div className={styles.App}
     >
       <Searchbar
       onSubmit={this.addMaterial}
