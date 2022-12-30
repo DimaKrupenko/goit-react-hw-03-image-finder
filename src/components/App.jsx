@@ -12,7 +12,8 @@ import Button from './Button/Button'
 export class App extends React.Component {
   state = {
     imagesSearch: [],
-    isLoading: false
+    isLoading: false,
+    showModal: false
   }
   
    
@@ -47,6 +48,12 @@ export class App extends React.Component {
     }
   }
   
+  ShowModal = imgId => {
+    console.log('hello')
+    this.setState(state => ({
+      showModal: !state.showModal
+    }))
+  }
    
   
 
@@ -66,9 +73,12 @@ export class App extends React.Component {
         ariaLabel="loading"
         wrapperStyle
         wrapperClass
+        
       />}
       <ImageGallery
-        items={this.state.imagesSearch}
+          items={this.state.imagesSearch}
+          ShowModal={this.ShowModal}
+          renderModal={this.state.showModal}
         />
         {this.state.imagesSearch.length >= 12 &&
           <Button
