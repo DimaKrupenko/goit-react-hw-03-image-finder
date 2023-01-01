@@ -49,13 +49,39 @@ export class App extends React.Component {
   }
   
   ShowModal = imgId => {
-    console.log('hello')
+   
     this.setState(state => ({
       showModal: !state.showModal
     }))
   }
    
-  
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown)
+  }
+
+  handleKeyDown = evt => {
+    if (evt.code === 'Escape') {
+      // this.setState(state => ({
+      //   showModal: false
+      // }))
+            this.ShowModal()
+
+    }
+  }
+
+  handleClickBackdrop = evt => {
+    
+    if (evt.currentTarget === evt.target) {
+      //  this.setState(state => ({
+      //   showModal: false
+      // }))
+      this.ShowModal()
+    }
+  }
 
 
   render() {
@@ -79,6 +105,7 @@ export class App extends React.Component {
           items={this.state.imagesSearch}
           ShowModal={this.ShowModal}
           renderModal={this.state.showModal}
+          handleClick={this.handleClickBackdrop}
         />
         {this.state.imagesSearch.length >= 12 &&
           <Button
