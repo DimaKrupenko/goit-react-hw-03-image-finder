@@ -1,35 +1,35 @@
 // import  React  from "react";
 import { Formik, Form, Field } from "formik";
-import Styles from './Searchbar.module.css'
+import styles from './Searchbar.module.css'
 
 
-export const Searchbar = ({ onSubmit,  }) => {
+export const Searchbar = ({ onSubmit, value, onChange }) => {
   
   const handleSubmit = (values, actions) => {
     onSubmit(values).then(() => actions.setSubmitting(false))
     actions.resetForm();
 
   }
-  return <div className={Styles.Searchbar}><Formik
+  return <div className={styles.Searchbar}><Formik
     
     initialValues={{ imagesSearch: '' }}
     onSubmit={handleSubmit}
   >
     {props => {
       return (
-         <Form className={Styles.SearchForm}>
-          <button type="submit" className={Styles.SearchFormButton} disabled={props.isSubmitting}>
-       <span className={Styles.SearchFormButtonLabel}>Search</span>
+         <Form className={styles.SearchForm}>
+          <button type="submit" className={styles.SearchFormButton} disabled={props.isSubmitting}>
+       <span className={styles.SearchFormButtonLabel}>Search</span>
      </button>
       <Field
         name='imagesSearch'
-        className={Styles.SearchFormInput}
+        className={styles.SearchFormInput}
         type="text"
         autoComplete="off"
         autoFocus
         placeholder="Search images and photos"
-        /* value={this.state.imagesSearch}
-        onChange={this.handleChange} */
+        value={value}
+        onChange={onChange} 
 
       >
       </Field>

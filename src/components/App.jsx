@@ -5,6 +5,8 @@ import { Searchbar } from './Searchbar/Searchbar'
 import {ImageGallery} from './ImageGallery/ImageGallery'
 import { API} from '../services/api'
 import Button from './Button/Button'
+import Modal from 'components/Modal/Modal'
+
 
 
 // import { render } from '@testing-library/react'
@@ -14,20 +16,43 @@ export class App extends React.Component {
     imagesSearch: [],
     isLoading: false,
     showModal: false,
-    searchQuery: ''
+    searchQuery: '',
+    largeImageUrl: '',
   }
   
    
-  addMaterial = async (values) => {
+  addMaterial = async () => {
     try {
       this.setState({ isLoading: true })
-      const material = await API.addMaterial(values)
-      this.setState(state => ({
-        imagesSearch: [...this.state.imagesSearch, ...material],
-        isLoading: false
-      }))
+      API.resetPage()
+      API.resetQuery()
+      API.setQuery(this.state.searchQuery)
+      const material = await API.addMaterial()
       this.setState({
-        searchQuery: ''
+        imagesSearch: material,
+        isLoading: false
+      })
+     
+      API.increasePage()
+
+      this.setState({
+    searchQuery: ''
+ })}
+    
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  onLoad = async () => {
+    try {
+      this.setState({
+        isLoading: true
+      })
+      const material = await API.addMaterial()
+      this.setState({
+        imagesSearch: [...this.state.imagesSearch, ...material],
+         isLoading: false
       })
       API.increasePage()
     }
@@ -36,64 +61,41 @@ export class App extends React.Component {
     }
   }
 
-  // onLoad = async ( value ) => {
-    
-  //   console.log(this.state.imagesSearch)
-  //   console.log(value)
+  queryHandler =(evt)=> {
+    this.setState({
+      searchQuery: evt.target.value
+    })
+  }
 
-  //   try {
-  //     const loadImages = await API.addLoad(value)
-  //     this.setState(state => ({
-  //       imagesSearch: [...state.imagesSearch, loadImages]
-  //     }))
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  modalHandler = (item) => {
+    console.log(item.largeImageUrl)
+    this.setState({
+      largeImageUrl: item.largeImageURL
+    })
+    this.showModal()
+  }
   
-  ShowModal = images => {
-   
-    this.setState(state => ({
-      showModal: !state.showModal
-    }))
+ 
+  closeModal = () => {
+    this.setState({
+       showModal: false
+     })
+   }
+  
+  showModal = () => {
+     this.setState({
+       showModal: true
+     })
   }
-   
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown)
-  }
-
-  handleKeyDown = evt => {
-    if (evt.code === 'Escape') {
-      // this.setState(state => ({
-      //   showModal: false
-      // }))
-            this.ShowModal()
-
-    }
-  }
-
-  handleClickBackdrop = evt => {
-    
-    if (evt.currentTarget === evt.target) {
-      //  this.setState(state => ({
-      //   showModal: false
-      // }))
-      this.ShowModal()
-    }
-  }
-
 
   render() {
     return (
     <div className={styles.App}
     >
       <Searchbar
-      onSubmit={this.addMaterial}
+          onSubmit={this.addMaterial}
+          value={this.state.searchQuery}
+          onChange={this.queryHandler}
       />
       {this.state.isLoading && <Audio
         height="80"
@@ -107,15 +109,17 @@ export class App extends React.Component {
       />}
       <ImageGallery
           items={this.state.imagesSearch}
-          ShowModal={this.ShowModal}
-          renderModal={this.state.showModal}
-          handleClick={this.handleClickBackdrop}
+          modalHandler={this.modalHandler}
+          // largeImageUrl={this.state.largeImageUrl}
         />
         {this.state.imagesSearch.length >= 12 &&
           <Button
-          onLoad={this.addMaterial}
-          value={this.state.imagesSearch}
+          onLoad={this.onLoad}
           />}
+         {this.state.showModal && <Modal
+            onClose={this.closeModal}>
+            <img src={this.state.largeImageUrl} alt='img'/>
+            </Modal>}
         
     </div>
   );

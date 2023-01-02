@@ -1,13 +1,8 @@
 import Styles from './Button.module.css'
 
-const Button = ({ onLoad, value }) => {
+const Button = ({ onLoad }) => {
     
-    
-    const handleOnLoad = (value) => {
-        onLoad(value).then()
-        
-    } 
-    return <button className={Styles.Button} type="button" onClick={handleOnLoad}>Load more</button>
+    return <button className={Styles.Button} type="button" onClick={onLoad}>Load more</button>
 }
 
 export default Button
