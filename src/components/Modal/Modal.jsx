@@ -1,13 +1,12 @@
-import Styles from './Modal.module.css'
+import styles from './Modal.module.css'
 
 
 
-const Modal = ({ items, handleClick }) => {
+const Modal = ({ item, handleClick }) => {
     
-    return <div className={Styles.Overlay} onClick={handleClick}>
-        <div className={Styles.Modal}>
-            {items.map(item =>
-                <img key={item.id} src={item.largeImageURL} alt="" />)}
+    return <div className={styles.overlay} onClick={handleClick}>
+        <div className={styles.modal}>
+                <img key={item.id} src={item.largeImageURL} alt="" />)
     
   </div>
 </div>

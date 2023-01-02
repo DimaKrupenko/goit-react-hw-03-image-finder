@@ -3,7 +3,7 @@ import React from 'react'
 import { Audio } from 'react-loader-spinner'
 import { Searchbar } from './Searchbar/Searchbar'
 import {ImageGallery} from './ImageGallery/ImageGallery'
-import * as API from '../services/api'
+import { API} from '../services/api'
 import Button from './Button/Button'
 
 
@@ -13,40 +13,44 @@ export class App extends React.Component {
   state = {
     imagesSearch: [],
     isLoading: false,
-    showModal: false
+    showModal: false,
+    searchQuery: ''
   }
   
    
   addMaterial = async (values) => {
-    console.log(values)
     try {
       this.setState({ isLoading: true })
       const material = await API.addMaterial(values)
       this.setState(state => ({
-        imagesSearch: material,
+        imagesSearch: [...this.state.imagesSearch, ...material],
         isLoading: false
       }))
+      this.setState({
+        searchQuery: ''
+      })
+      API.increasePage()
     }
     catch (error) {
       console.log(error)
     }
   }
 
-  onLoad = async ( value ) => {
+  // onLoad = async ( value ) => {
     
-    console.log(this.state.imagesSearch)
-    console.log(value)
+  //   console.log(this.state.imagesSearch)
+  //   console.log(value)
 
-    try {
-      const loadImages = await API.addLoad(value)
-      this.setState(state => ({
-        imagesSearch: [...state.imagesSearch, loadImages]
-      }))
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  //   try {
+  //     const loadImages = await API.addLoad(value)
+  //     this.setState(state => ({
+  //       imagesSearch: [...state.imagesSearch, loadImages]
+  //     }))
+  //   }
+  //   catch (error) {
+  //     console.log(error)
+  //   }
+  // }
   
   ShowModal = imgId => {
    
@@ -109,7 +113,7 @@ export class App extends React.Component {
         />
         {this.state.imagesSearch.length >= 12 &&
           <Button
-          onLoad={this.onLoad}
+          onLoad={this.addMaterial}
           value={this.state.imagesSearch}
           />}
         

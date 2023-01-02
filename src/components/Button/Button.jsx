@@ -4,7 +4,7 @@ const Button = ({ onLoad, value }) => {
     
     
     const handleOnLoad = (value) => {
-        onLoad(value).then(console.log(value))
+        onLoad(value).then()
         
     } 
     return <button className={Styles.Button} type="button" onClick={handleOnLoad}>Load more</button>

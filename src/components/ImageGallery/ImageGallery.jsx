@@ -7,7 +7,7 @@ export const ImageGallery = ({ items, ShowModal, renderModal, handleClick }) => 
             <ul className={Styles.ImageGallery}>
                     <ImageGalleryItem items={items} ShowModal={ShowModal}/>
                     {renderModal && <Modal
-                            items={items}
+                            item={items}
                             handleClick={handleClick}
                          />}
             </ul>
