@@ -52,7 +52,7 @@ export class App extends React.Component {
   //   }
   // }
   
-  ShowModal = imgId => {
+  ShowModal = images => {
    
     this.setState(state => ({
       showModal: !state.showModal
