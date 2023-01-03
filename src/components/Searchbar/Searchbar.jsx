@@ -1,6 +1,7 @@
 // import  React  from "react";
 import { Formik, Form, Field } from "formik";
 import styles from './Searchbar.module.css'
+import PropTypes from 'prop-types';
 
 
 export const Searchbar = ({ onSubmit, value, onChange }) => {
@@ -37,4 +38,9 @@ export const Searchbar = ({ onSubmit, value, onChange }) => {
       )
    }}
 </Formik></div>
+};
+
+Searchbar.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 };

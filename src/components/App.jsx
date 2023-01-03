@@ -9,8 +9,6 @@ import Modal from 'components/Modal/Modal'
 
 
 
-// import { render } from '@testing-library/react'
-
 export class App extends React.Component {
   state = {
     imagesSearch: [],
@@ -68,7 +66,6 @@ export class App extends React.Component {
   }
 
   modalHandler = (item) => {
-    console.log(item.largeImageUrl)
     this.setState({
       largeImageUrl: item.largeImageURL
     })
@@ -110,7 +107,6 @@ export class App extends React.Component {
       <ImageGallery
           items={this.state.imagesSearch}
           modalHandler={this.modalHandler}
-          // largeImageUrl={this.state.largeImageUrl}
         />
         {this.state.imagesSearch.length >= 12 &&
           <Button
@@ -120,11 +116,8 @@ export class App extends React.Component {
             onClose={this.closeModal}>
             <img src={this.state.largeImageUrl} alt='img'/>
             </Modal>}
-        
     </div>
   );
-  
   }
-  
 };
 

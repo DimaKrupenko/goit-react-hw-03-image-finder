@@ -1,4 +1,6 @@
 import styles from './ImageGalleryItem.module.css'
+import PropTypes from 'prop-types';
+
 
 const ImageGalleryItem = ({ items, modalHandler }) => {
     return (
@@ -12,3 +14,9 @@ const ImageGalleryItem = ({ items, modalHandler }) => {
  }
 
 export default ImageGalleryItem
+
+ImageGalleryItem.propTypes = {
+    items: PropTypes.array,
+    modalHandler: PropTypes.func,
+
+};
